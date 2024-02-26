@@ -13,7 +13,6 @@ import java.util.List;
 public class NoteController {
 
     private final NoteService noteService;
-    @Autowired
     public NoteController(NoteService noteService) {
         this.noteService = noteService;
     }
@@ -22,8 +21,10 @@ public class NoteController {
     public List<NoteEntity> getAllNotes(){
         return noteService.getAllNotes();
     }
-    @PostMapping("/id/{id}")
-    public void addById(@PathVariable int id, NoteRequest noteRequest) throws Exception {
-        noteService.writeNoteById(id,noteRequest);
+
+    @GetMapping("id/{id}")
+    public NoteEntity getById(@PathVariable int id){
+        return noteService.getById(id);
     }
+
 }

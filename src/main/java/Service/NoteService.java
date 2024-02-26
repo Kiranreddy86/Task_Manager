@@ -20,19 +20,11 @@ public class NoteService {
         this.taskRepository = taskRepository;
     }
 
-    public void writeNoteById(int taskId, NoteRequest noteRequest) throws Exception {
-        TaskEntity taskEntity=taskRepository.findById(taskId).get();
-        if(taskEntity==null){
-            throw new Exception("No task found");
-        }
-        NoteEntity noteEntity=new NoteEntity();
-        noteEntity.setDescription(noteRequest.getNote());
-        taskEntity.setNoteEntity(noteEntity);
-        taskRepository.save(taskEntity);
-        noteRepository.save(noteEntity);
-    }
-
     public List<NoteEntity> getAllNotes() {
         return noteRepository.findAll();
+    }
+
+    public NoteEntity getById(int taskId) {
+        return noteRepository.findById(taskId).get();
     }
 }

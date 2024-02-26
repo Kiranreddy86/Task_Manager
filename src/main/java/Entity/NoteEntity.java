@@ -7,8 +7,7 @@ import lombok.Data;
 @Table(name = "notes")
 @Data
 public class NoteEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column
     int id;
     @Column
     String Description;

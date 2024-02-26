@@ -1,6 +1,8 @@
 package Controllers;
 
+import DTO.NoteRequest;
 import DTO.TaskRequest;
+import Service.NoteService;
 import Service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,5 +22,9 @@ public class TaskController {
     @ResponseStatus(HttpStatus.CREATED)
     public void addTask(@RequestBody TaskRequest taskRequest){
         taskService.addTask(taskRequest);
+    }
+    @PostMapping("/addnote/{id}")
+    public void addNoteById(@PathVariable int id, NoteRequest noteRequest) throws Exception {
+        taskService.writeNoteById(id,noteRequest);
     }
 }
