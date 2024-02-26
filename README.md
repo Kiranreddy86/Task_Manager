@@ -1,13 +1,17 @@
 API ENDPOINTS
 
 Create a new task
+<br>
 --- POST/tasks
-
+<br>
 Get all tasks if completed=true
+<br>
 --- GET/tasks
+<br>
 ------ /tasks?completed=true/false
-
+<br>
 Get the tasks by id
+<br>
 --- GET/tasks/{task_id}
 
 Add/Remove notes from the task. Mark the task completed
