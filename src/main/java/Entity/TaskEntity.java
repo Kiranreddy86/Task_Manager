@@ -24,4 +24,6 @@ public class TaskEntity {
     Date deadline;
     @Column
     boolean completed;
+    @OneToOne(mappedBy = "taskEntity",cascade = CascadeType.ALL)
+    NoteEntity noteEntity;
 }
