@@ -8,7 +8,7 @@ Get all tasks if completed=true
 <br>
 *** GET/tasks
 <br>
------- /tasks?completed=true/false
+***** /tasks?completed=true/false
 <br>
 Get the tasks by id
 <br>
