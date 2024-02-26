@@ -13,18 +13,19 @@ Get all tasks if completed=true
 Get the tasks by id
 <br>
 --- GET/tasks/{task_id}
+<br>
 
-Add/Remove notes from the task. Mark the task completed
---- PATCH/tasks/{task_id}
+Add/Remove notes from the task. Mark the task completed<br>
+--- PATCH/tasks/{task_id}<br>
 
-Delete the task by id
---- DELETE/tasks/{task_id}
+Delete the task by id<br>
+--- DELETE/tasks/{task_id}<br>
 
-Get all notes under a particular task
---- GET/tasks/{task_id}/notes
+Get all notes under a particular task<br>
+--- GET/tasks/{task_id}/notes<br>
 
-Add notes under the task with the given task id
---- POST/tasks/{task_id}/notes
+Add notes under the task with the given task id<br>
+--- POST/tasks/{task_id}/notes<br>
 
-Delete notes under the task with the given task ID
---- DELETE/tasks/{task_id}/notes/{notes_id}
+Delete notes under the task with the given task ID<br>
+--- DELETE/tasks/{task_id}/notes/{notes_id}<br>
