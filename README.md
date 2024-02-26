@@ -3,7 +3,7 @@ API ENDPOINTS
 Create a new task
 --- POST/tasks
 
-Get all tasks if completed==true
+Get all tasks if completed=true
 --- GET/tasks
 ------ /tasks?completed=true/false
 
