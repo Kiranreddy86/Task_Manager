@@ -10,6 +10,8 @@ import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
@@ -27,17 +29,32 @@ public class TaskService {
         task.setDescription(taskRequest.getDescription());
         taskRepository.save(task);
     }
-    public void writeNoteById(int taskId, NoteRequest noteRequest) throws Exception {
-        TaskEntity taskEntity=taskRepository.findById(taskId).get();
-        if(taskEntity==null){
-            throw new Exception("No task found");
+    public TaskEntity getTaskById(int taskId) {
+        return taskRepository.findById(taskId).get();
+    }
+    public void deleteById(int taskId) {
+        taskRepository.deleteById(taskId);
+    }
+    public NoteEntity getNotesTaskId(int taskId) {
+        return noteRepository.findById(taskId).get();
+    }
+
+    public void addNoteTaskId(int taskId, NoteRequest noteRequest) throws NoSuchFieldException {
+        TaskEntity task=taskRepository.findById(taskId).get();
+        if(task==null) {
+            throw new NoSuchFieldException("not found");
         }
-        NoteEntity noteEntity=new NoteEntity();
-        noteEntity.setId(taskEntity.getId());
-        noteEntity.setTitle(noteRequest.getTitle());
-        noteEntity.setBody(noteRequest.getBody());
-        taskEntity.setNoteEntity(noteEntity);
-        taskRepository.save(taskEntity);
-        noteRepository.save(noteEntity);
+        NoteEntity note=new NoteEntity();
+        note.setBody(noteRequest.getBody());
+        note.setTitle(noteRequest.getTitle());
+        noteRepository.save(note);
+    }
+
+    public void deleteNoteById(int taskId, int noteId) throws NoSuchFieldException {
+        TaskEntity task=taskRepository.findById(taskId).get();
+        if(task==null) {
+            throw new NoSuchFieldException("not found");
+        }
+
     }
 }

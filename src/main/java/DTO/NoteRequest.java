@@ -11,5 +11,6 @@ import lombok.NonNull;
 public class NoteRequest {
     @NonNull
     String title;
+    @NonNull
     String body;
 }

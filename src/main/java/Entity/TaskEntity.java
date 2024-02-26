@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "tasks")
@@ -24,6 +26,6 @@ public class TaskEntity {
     Date deadline;
     @Column
     boolean completed;
-    @OneToOne(mappedBy = "taskEntity",cascade = CascadeType.ALL)
-    NoteEntity noteEntity;
+    @OneToMany(mappedBy = "taskEntity",cascade = CascadeType.ALL)
+    List<NoteEntity> noteEntity=new ArrayList<NoteEntity>();
 }
