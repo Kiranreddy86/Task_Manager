@@ -10,5 +10,6 @@ import lombok.NonNull;
 @NoArgsConstructor
 public class NoteRequest {
     @NonNull
-    String note;
+    String title;
+    String body;
 }

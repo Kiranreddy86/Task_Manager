@@ -34,7 +34,8 @@ public class TaskService {
         }
         NoteEntity noteEntity=new NoteEntity();
         noteEntity.setId(taskEntity.getId());
-        noteEntity.setDescription(noteRequest.getNote());
+        noteEntity.setTitle(noteRequest.getTitle());
+        noteEntity.setBody(noteRequest.getBody());
         taskEntity.setNoteEntity(noteEntity);
         taskRepository.save(taskEntity);
         noteRepository.save(noteEntity);

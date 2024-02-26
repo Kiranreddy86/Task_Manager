@@ -10,5 +10,7 @@ public class NoteEntity {
     @Column
     int id;
     @Column
-    String Description;
+    String title;
+    @Column
+    String body;
 }
