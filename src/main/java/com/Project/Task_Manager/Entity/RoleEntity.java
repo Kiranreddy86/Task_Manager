@@ -6,16 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "notes")
+@Table(name = "roles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NoteEntity {
+public class RoleEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    private String title;
-    @Column
-    private String body;
+    private String roleName;
 }

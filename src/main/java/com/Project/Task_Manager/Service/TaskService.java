@@ -23,15 +23,7 @@ public class TaskService {
         this.noteRepository = noteRepository;
     }
     public ResponseEntity<TaskEntity> addTask(TaskEntity taskEntity) {
-        TaskEntity savedTask=taskRepository.save(taskEntity);
-        List<NoteEntity> notes = taskEntity.getNotes();
-        if (notes != null && !notes.isEmpty()) {
-            for (NoteEntity note : notes) {
-                note.setTaskEntity(savedTask);
-                noteRepository.save(note);
-            }
-        }
-        return ResponseEntity.ok(taskEntity);
+        return ResponseEntity.ok(taskRepository.save(taskEntity));
     }
     public ResponseEntity<TaskEntity> getTaskById(int taskId) {
         TaskEntity task=taskRepository.findById(taskId).orElse(null);
@@ -52,26 +44,4 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
-    @Transactional
-    public ResponseEntity<TaskEntity> updateTaskById(int taskId, TaskRequest taskRequest) {
-        if (taskRequest == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        TaskEntity task = taskRepository.findById(taskId).orElse(null);
-        if (task == null) {
-            return ResponseEntity.notFound().build();
-        }
-        if (taskRequest.getDeadline() != null) {
-            task.setDeadline(taskRequest.getDeadline());
-        }
-        if (taskRequest.getTitle() != null) {
-            task.setTitle(taskRequest.getTitle());
-        }
-        if (taskRequest.getDescription() != null) {
-            task.setDescription(taskRequest.getDescription());
-        }
-        task.setCompleted(taskRequest.isCompleted());
-        taskRepository.save(task);
-        return ResponseEntity.ok(task);
-    }
 }

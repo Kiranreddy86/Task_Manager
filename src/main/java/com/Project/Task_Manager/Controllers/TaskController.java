@@ -5,6 +5,7 @@ import DTO.TaskRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.Project.Task_Manager.Entity.TaskEntity;
@@ -23,6 +24,7 @@ public class TaskController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TaskEntity> addTask(@RequestBody TaskEntity taskEntity) {
         return taskService.addTask(taskEntity);
     }
@@ -38,9 +40,5 @@ public class TaskController {
     @ResponseStatus(HttpStatus.OK)
     public List<TaskEntity> getAllTasks(){
         return taskService.getAllTasks();
-    }
-    @PutMapping("/{task_id}")
-    public ResponseEntity<TaskEntity> updateTaskById(@PathVariable int taskId,@RequestBody TaskRequest taskRequest){
-        return taskService.updateTaskById(taskId,taskRequest);
     }
 }
