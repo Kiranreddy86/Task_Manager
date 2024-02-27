@@ -3,15 +3,17 @@ package Entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity
-@Table(name = "notes")
+@Entity(name = "notes")
 @Data
 public class NoteEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private int id;
     @Column
-    String title;
+    private String title;
     @Column
-    String body;
+    private String body;
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private TaskEntity taskEntity;
 }

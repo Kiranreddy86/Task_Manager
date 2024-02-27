@@ -1,31 +1,33 @@
 package Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "tasks")
+@Entity(name = "tasks")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    int id;
+    @Column(nullable = false)
+    private int id;
+    @NonNull
     @Column
-    String title;
+    private String title;
+    @NonNull
     @Column
-    String description;
+    private String description;
+    @NonNull
     @Column
-    Date deadline;
+    private String deadline;
     @Column
-    boolean completed;
-    @OneToMany(mappedBy = "taskEntity",cascade = CascadeType.ALL)
-    List<NoteEntity> noteEntity=new ArrayList<NoteEntity>();
+    private boolean completed;
+    @OneToMany(mappedBy = "taskEntity", cascade = CascadeType.ALL)
+    private List<NoteEntity> noteEntity = new ArrayList<>();
 }

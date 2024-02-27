@@ -16,5 +16,5 @@ public class TaskRequest {
     @NonNull
     String description;
     @NonNull
-    Date deadline;
+    String deadline;
 }
