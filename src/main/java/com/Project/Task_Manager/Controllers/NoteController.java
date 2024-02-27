@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("notes")
+@RequestMapping("note")
 public class NoteController {
     @Autowired
     NoteService noteService;
@@ -28,5 +28,10 @@ public class NoteController {
     @ResponseStatus(HttpStatus.GONE)
     public void deleteNoteById(@PathVariable int task_id,@PathVariable int note_id) throws NoSuchFieldException {
         noteService.deleteNoteById(task_id,note_id);
+    }
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<NoteEntity> getAllNotes(){
+        return noteService.getAllNotes();
     }
 }

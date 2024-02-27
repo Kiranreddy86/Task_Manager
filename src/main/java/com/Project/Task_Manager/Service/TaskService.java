@@ -1,14 +1,13 @@
 package com.Project.Task_Manager.Service;
 
-import DTO.TaskRequest;
-
 import com.Project.Task_Manager.Repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.Project.Task_Manager.Entity.NoteEntity;
 import com.Project.Task_Manager.Entity.TaskEntity;
 import com.Project.Task_Manager.Repository.TaskRepository;
+
+import java.util.List;
 
 @Service
 public class TaskService {
@@ -28,5 +27,9 @@ public class TaskService {
     }
     public void deleteById(int taskId) {
         taskRepository.deleteById(taskId);
+    }
+
+    public List<TaskEntity> getAllTasks() {
+        return taskRepository.findAll();
     }
 }

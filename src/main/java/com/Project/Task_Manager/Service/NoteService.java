@@ -43,4 +43,8 @@ public class NoteService {
         }
         noteRepository.deleteNoteByTaskId(taskId,noteId);
     }
+
+    public List<NoteEntity> getAllNotes() {
+        return noteRepository.findAll();
+    }
 }

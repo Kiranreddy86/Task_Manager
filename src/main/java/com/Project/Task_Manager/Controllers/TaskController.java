@@ -2,12 +2,15 @@ package com.Project.Task_Manager.Controllers;
 
 
 import com.Project.Task_Manager.Entity.NoteEntity;
+import org.h2.util.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.Project.Task_Manager.Entity.TaskEntity;
 import com.Project.Task_Manager.Service.TaskService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("task")
@@ -33,5 +36,10 @@ public class TaskController {
     @ResponseStatus(HttpStatus.GONE)
     public void deleteById(@PathVariable int task_id){
         taskService.deleteById(task_id);
+    }
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TaskEntity> getAllTasks(){
+        return taskService.getAllTasks();
     }
 }
