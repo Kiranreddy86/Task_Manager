@@ -1,6 +1,9 @@
 package com.Project.Task_Manager.Service;
 
+import DTO.TaskRequest;
+import com.Project.Task_Manager.Entity.NoteEntity;
 import com.Project.Task_Manager.Repository.NoteRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,9 +22,15 @@ public class TaskService {
         this.taskRepository = taskRepository;
         this.noteRepository = noteRepository;
     }
-
     public ResponseEntity<TaskEntity> addTask(TaskEntity taskEntity) {
-        taskRepository.save(taskEntity);
+        TaskEntity savedTask=taskRepository.save(taskEntity);
+        List<NoteEntity> notes = taskEntity.getNotes();
+        if (notes != null && !notes.isEmpty()) {
+            for (NoteEntity note : notes) {
+                note.setTaskEntity(savedTask);
+                noteRepository.save(note);
+            }
+        }
         return ResponseEntity.ok(taskEntity);
     }
     public ResponseEntity<TaskEntity> getTaskById(int taskId) {
@@ -41,5 +50,28 @@ public class TaskService {
 
     public List<TaskEntity> getAllTasks() {
         return taskRepository.findAll();
+    }
+
+    @Transactional
+    public ResponseEntity<TaskEntity> updateTaskById(int taskId, TaskRequest taskRequest) {
+        if (taskRequest == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        TaskEntity task = taskRepository.findById(taskId).orElse(null);
+        if (task == null) {
+            return ResponseEntity.notFound().build();
+        }
+        if (taskRequest.getDeadline() != null) {
+            task.setDeadline(taskRequest.getDeadline());
+        }
+        if (taskRequest.getTitle() != null) {
+            task.setTitle(taskRequest.getTitle());
+        }
+        if (taskRequest.getDescription() != null) {
+            task.setDescription(taskRequest.getDescription());
+        }
+        task.setCompleted(taskRequest.isCompleted());
+        taskRepository.save(task);
+        return ResponseEntity.ok(task);
     }
 }

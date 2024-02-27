@@ -29,7 +29,7 @@ public class NoteService {
         NoteEntity note = new NoteEntity();
         note.setBody(noteRequest.getBody());
         note.setTitle(noteRequest.getTitle());
-        task.getNoteEntity().add(note);
+        task.getNotes().add(note);
         return ResponseEntity.ok(noteRepository.save(note));
     }
     @Transactional
@@ -48,5 +48,25 @@ public class NoteService {
 
     public List<NoteEntity> getAllNotes() {
         return noteRepository.findAll();
+    }
+
+    @Transactional
+    public ResponseEntity<NoteEntity> updateNoteByTaskId(int taskId, int noteId, NoteRequest noteRequest) {
+        TaskEntity task=taskRepository.findById(taskId).orElse(null);
+        if(task == null) {
+            return ResponseEntity.notFound().build();
+        }
+        NoteEntity note=noteRepository.findById(noteId).orElse(null);
+        if(note == null){
+            return ResponseEntity.notFound().build();
+        }
+        if(noteRequest.getTitle()!=null){
+            note.setTitle(noteRequest.getTitle());
+        }
+        if(noteRequest.getBody()!=null){
+            note.setBody(noteRequest.getBody());
+        }
+        noteRepository.save(note);
+        return ResponseEntity.ok(note);
     }
 }

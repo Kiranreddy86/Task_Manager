@@ -1,6 +1,7 @@
 package com.Project.Task_Manager.Controllers;
 
 
+import DTO.TaskRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +38,9 @@ public class TaskController {
     @ResponseStatus(HttpStatus.OK)
     public List<TaskEntity> getAllTasks(){
         return taskService.getAllTasks();
+    }
+    @PutMapping("/{task_id}")
+    public ResponseEntity<TaskEntity> updateTaskById(@PathVariable int taskId,@RequestBody TaskRequest taskRequest){
+        return taskService.updateTaskById(taskId,taskRequest);
     }
 }

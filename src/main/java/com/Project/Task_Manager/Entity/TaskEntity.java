@@ -24,7 +24,7 @@ public class TaskEntity {
     private String deadline;
     @Column
     private boolean completed;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "task_id")
-    private List<NoteEntity> noteEntity=new ArrayList<>();
+    @OneToMany(mappedBy = "taskEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NoteEntity> notes=new ArrayList<>();
+
 }

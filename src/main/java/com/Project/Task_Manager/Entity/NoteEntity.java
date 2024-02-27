@@ -18,4 +18,7 @@ public class NoteEntity {
     private String title;
     @Column
     private String body;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "task_id")
+    private TaskEntity taskEntity;
 }

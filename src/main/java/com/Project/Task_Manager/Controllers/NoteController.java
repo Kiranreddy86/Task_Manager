@@ -33,4 +33,8 @@ public class NoteController {
     public List<NoteEntity> getAllNotes(){
         return noteService.getAllNotes();
     }
+    @PutMapping("/{task_id}/notes/{note_id}")
+    public ResponseEntity<NoteEntity> updateNoteByTaskId(@PathVariable int taskId,@PathVariable int noteId,@RequestBody NoteRequest noteRequest){
+        return noteService.updateNoteByTaskId(taskId,noteId,noteRequest);
+    }
 }
