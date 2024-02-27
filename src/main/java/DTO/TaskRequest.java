@@ -1,9 +1,6 @@
 package DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import java.util.Date;
 
@@ -11,10 +8,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskRequest {
-    @NonNull
     String title;
-    @NonNull
     String description;
-    @NonNull
     String deadline;
 }

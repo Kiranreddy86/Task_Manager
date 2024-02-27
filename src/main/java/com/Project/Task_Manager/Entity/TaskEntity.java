@@ -1,4 +1,4 @@
-package Entity;
+package com.Project.Task_Manager.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,27 +7,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity(name = "tasks")
+@Entity
+@Table(name = "tasks")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class TaskEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NonNull
     @Column
     private String title;
-    @NonNull
     @Column
     private String description;
-    @NonNull
     @Column
     private String deadline;
     @Column
     private boolean completed;
-    @OneToMany(mappedBy = "taskEntity", cascade = CascadeType.ALL)
-    private List<NoteEntity> noteEntity = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "task_id")
+    private List<NoteEntity> noteEntity=new ArrayList<>();
 }
