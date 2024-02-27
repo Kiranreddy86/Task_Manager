@@ -37,6 +37,7 @@ public class TaskService {
         if(task == null) {
             return ResponseEntity.notFound().build();
         }
+        taskRepository.delete(task);
         return ResponseEntity.ok(task);
     }
 

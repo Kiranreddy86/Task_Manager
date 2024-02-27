@@ -29,15 +29,18 @@ public class TaskController {
         return taskService.addTask(taskEntity);
     }
     @GetMapping("/{task_id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TaskEntity> getById(@PathVariable int task_id){
         return taskService.getTaskById(task_id);
     }
     @DeleteMapping("/{task_id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TaskEntity> deleteById(@PathVariable int task_id){
         return taskService.deleteById(task_id);
     }
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ADMIN')")
     public List<TaskEntity> getAllTasks(){
         return taskService.getAllTasks();
     }

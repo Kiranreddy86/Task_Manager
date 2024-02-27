@@ -6,6 +6,7 @@ import com.Project.Task_Manager.Service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class NoteController {
     NoteService noteService;
     @GetMapping("/{task_id}/notes")
     @ResponseStatus(HttpStatus.FOUND)
+    @PreAuthorize("hasRole('ADMIN')")
     public List<NoteEntity> getNotesTaskId(@PathVariable int task_id){
         return noteService.getNotesTaskId(task_id);
     }

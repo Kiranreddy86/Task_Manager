@@ -13,7 +13,6 @@ public class UserController {
     @Autowired
     UserService userService;
     @PostMapping("/register")
-    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public void register(@RequestBody UserRequest userRequest){
         userService.register(userRequest);
