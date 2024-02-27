@@ -1,10 +1,9 @@
 package com.Project.Task_Manager.Controllers;
 
 
-import com.Project.Task_Manager.Entity.NoteEntity;
-import org.h2.util.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.Project.Task_Manager.Entity.TaskEntity;
@@ -23,19 +22,16 @@ public class TaskController {
     }
 
     @PostMapping("/add")
-    @ResponseStatus(HttpStatus.OK)
-    public void addTask(@RequestBody TaskEntity taskEntity) {
-        taskService.addTask(taskEntity);
+    public ResponseEntity<TaskEntity> addTask(@RequestBody TaskEntity taskEntity) {
+        return taskService.addTask(taskEntity);
     }
     @GetMapping("/{task_id}")
-    @ResponseStatus(HttpStatus.OK)
-    public TaskEntity getById(@PathVariable int task_id){
+    public ResponseEntity<TaskEntity> getById(@PathVariable int task_id){
         return taskService.getTaskById(task_id);
     }
     @DeleteMapping("/{task_id}")
-    @ResponseStatus(HttpStatus.GONE)
-    public void deleteById(@PathVariable int task_id){
-        taskService.deleteById(task_id);
+    public ResponseEntity<TaskEntity> deleteById(@PathVariable int task_id){
+        return taskService.deleteById(task_id);
     }
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)

@@ -5,6 +5,7 @@ import com.Project.Task_Manager.Entity.NoteEntity;
 import com.Project.Task_Manager.Service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,14 +21,12 @@ public class NoteController {
         return noteService.getNotesTaskId(task_id);
     }
     @PostMapping("/{task_id}/notes")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addNoteTaskId(@PathVariable int task_id, @RequestBody NoteRequest noteRequest) throws NoSuchFieldException {
-        noteService.addNoteTaskId(task_id, noteRequest);
+    public ResponseEntity<NoteEntity> addNoteTaskId(@PathVariable int task_id, @RequestBody NoteRequest noteRequest) throws NoSuchFieldException {
+        return noteService.addNoteTaskId(task_id, noteRequest);
     }
     @DeleteMapping("/{task_id}/notes/{note_id}")
-    @ResponseStatus(HttpStatus.GONE)
-    public void deleteNoteById(@PathVariable int task_id,@PathVariable int note_id) throws NoSuchFieldException {
-        noteService.deleteNoteById(task_id,note_id);
+    public ResponseEntity<NoteEntity> deleteNoteById(@PathVariable int task_id,@PathVariable int note_id) throws NoSuchFieldException {
+        return noteService.deleteNoteById(task_id,note_id);
     }
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)

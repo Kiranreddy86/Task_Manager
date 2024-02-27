@@ -7,6 +7,7 @@ import com.Project.Task_Manager.Repository.NoteRepository;
 import com.Project.Task_Manager.Repository.TaskRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,28 +21,29 @@ public class NoteService {
     public List<NoteEntity> getNotesTaskId(int taskId) {
         return noteRepository.findNoteBytaskId(taskId);
     }
-    public void addNoteTaskId(int taskId, NoteRequest noteRequest) throws NoSuchFieldException {
+    public ResponseEntity<NoteEntity> addNoteTaskId(int taskId, NoteRequest noteRequest) {
         TaskEntity task = taskRepository.findById(taskId).orElse(null);
         if (task == null) {
-            throw new NoSuchFieldException("Task with ID " + taskId + " not found");
+            return ResponseEntity.notFound().build();
         }
         NoteEntity note = new NoteEntity();
         note.setBody(noteRequest.getBody());
         note.setTitle(noteRequest.getTitle());
         task.getNoteEntity().add(note);
-        noteRepository.save(note);
+        return ResponseEntity.ok(noteRepository.save(note));
     }
     @Transactional
-    public void deleteNoteById(int taskId, int noteId) throws NoSuchFieldException {
+    public ResponseEntity<NoteEntity> deleteNoteById(int taskId, int noteId) {
         TaskEntity task=taskRepository.findById(taskId).orElse(null);
         if(task == null) {
-            throw new NoSuchFieldException("not found"+" "+taskId);
+            return ResponseEntity.notFound().build();
         }
         NoteEntity note=noteRepository.findById(noteId).orElse(null);
         if(note == null){
-            throw new NoSuchFieldException("not found"+" "+ noteId);
+            return ResponseEntity.notFound().build();
         }
         noteRepository.deleteNoteByTaskId(taskId,noteId);
+        return ResponseEntity.ok(note);
     }
 
     public List<NoteEntity> getAllNotes() {
