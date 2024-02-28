@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class TaskEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
     private String title;

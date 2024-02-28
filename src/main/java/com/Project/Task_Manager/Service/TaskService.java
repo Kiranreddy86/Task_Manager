@@ -20,20 +20,18 @@ import java.util.List;
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
-    private final NoteRepository noteRepository;
     @Autowired
     public TaskService(TaskRepository taskRepository, NoteRepository noteRepository) {
         this.taskRepository = taskRepository;
-        this.noteRepository = noteRepository;
     }
     public ResponseEntity<TaskEntity> addTask(TaskEntity taskEntity) {
-        LocalDate date=taskEntity.getDeadline();
+        LocalDate deadlineDate=taskEntity.getDeadline();
         LocalDate createdDate =taskEntity.getCreated_At();
-        boolean isValid = date.isAfter(createdDate);
+        boolean isValid = deadlineDate.isAfter(createdDate);
         if(isValid){
             return ResponseEntity.ok(taskRepository.save(taskEntity));
         }else{
-            throw new DateTimeException("Please provide valid deadline Date");
+            return ResponseEntity.unprocessableEntity().build();
         }
     }
     public ResponseEntity<TaskEntity> getTaskById(int taskId) {
@@ -53,6 +51,13 @@ public class TaskService {
     }
 
     public List<TaskEntity> getAllTasks() {
+        List<TaskEntity> list = taskRepository.findAll();
+        for (TaskEntity entity: list){
+            boolean deadlineFinished = entity.getDeadline().isBefore(LocalDate.now());
+            if(deadlineFinished) {
+                taskRepository.delete(entity);
+            }
+        }
         return taskRepository.findAll();
     }
 
