@@ -21,11 +21,11 @@ public class TaskEntity {
     @Column
     private String description;
     @Column
-    private Date createdAt;
+    private Date createdAt=new Date();
     @Column
     private boolean completed;
     @Column
-    private Date deadline;
+    private String deadline;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "task_id")
     private List<NoteEntity> noteEntity=new ArrayList<>();
