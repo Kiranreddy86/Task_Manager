@@ -35,8 +35,4 @@ public class NoteController {
     public List<NoteEntity> getAllNotes(){
         return noteService.getAllNotes();
     }
-//    @GetMapping("/{note_id}")
-//    public ResponseEntity<NoteEntity> getById(@PathVariable int noteId){
-//        return noteService.getById(noteId);
-//    }
 }

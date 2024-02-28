@@ -1,6 +1,7 @@
 package com.Project.Task_Manager.Controllers;
 
 import DTO.UserRequest;
+import com.Project.Task_Manager.Entity.UserEntity;
 import com.Project.Task_Manager.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,7 @@ public class UserController {
     UserService userService;
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestBody UserRequest userRequest){
-        userService.register(userRequest);
+    public void register(@RequestBody UserEntity userEntity){
+        userService.register(userEntity);
     }
 }
