@@ -3,6 +3,7 @@ package com.Project.Task_Manager.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,11 +22,11 @@ public class TaskEntity {
     @Column
     private String description;
     @Column
-    private Date createdAt=new Date();
+    private LocalDate created_At = LocalDate.now();
     @Column
-    private boolean completed;
+    private boolean completed=false;
     @Column
-    private String deadline;
+    private LocalDate deadline;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "task_id")
     private List<NoteEntity> noteEntity=new ArrayList<>();
