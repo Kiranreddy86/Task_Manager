@@ -2,6 +2,7 @@ package com.Project.Task_Manager.Controllers;
 
 
 import DTO.TaskRequest;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.Project.Task_Manager.Entity.TaskEntity;
 import com.Project.Task_Manager.Service.TaskService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -25,8 +27,13 @@ public class TaskController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<TaskEntity> addTask(@RequestBody TaskEntity taskEntity) {
-        return taskService.addTask(taskEntity);
+    public ResponseEntity<TaskEntity> addTask(@RequestBody TaskRequest taskRequest) {
+        TaskEntity entity=new TaskEntity();
+        entity.setTitle(taskRequest.getTitle());
+        entity.setDescription(taskRequest.getDescription());
+        entity.setDeadline(taskRequest.getDeadline());
+        entity.setNoteEntity(taskRequest.getNotes());
+        return taskService.addTask(entity);
     }
     @GetMapping("/{task_id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -44,4 +51,9 @@ public class TaskController {
     public List<TaskEntity> getAllTasks(){
         return taskService.getAllTasks();
     }
+    @GetMapping("/todayTasks")
+    public List<TaskEntity> getAllTodayTasks(){
+        return taskService.getAllTodayTasks();
+    }
+
 }

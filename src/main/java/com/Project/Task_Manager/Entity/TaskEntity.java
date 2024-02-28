@@ -30,4 +30,5 @@ public class TaskEntity {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "task_id")
     private List<NoteEntity> noteEntity=new ArrayList<>();
+
 }
