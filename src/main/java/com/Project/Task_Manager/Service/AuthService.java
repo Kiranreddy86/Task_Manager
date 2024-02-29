@@ -5,6 +5,7 @@ import DTO.JwtResponse;
 import com.Project.Task_Manager.JWT.JwtAuthencationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +19,7 @@ public class AuthService {
     JwtAuthencationHelper jwtAuthencationHelper;
     @Autowired
     UserDetailsService userDetailsService;
-    public JwtResponse login(JwtRequest jwtRequest) throws Exception {
+    public JwtResponse login(JwtRequest jwtRequest){
         this.doAuthenticate(jwtRequest.getUsername(),jwtRequest.getPassword());
         UserDetails userDetails= userDetailsService.loadUserByUsername(jwtRequest.getUsername());
         String token=jwtAuthencationHelper.generateToken(userDetails);
@@ -26,13 +27,12 @@ public class AuthService {
         return response;
     }
 
-    private void doAuthenticate(String username, String password) throws Exception {
+    private void doAuthenticate(String username, String password){
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken=new UsernamePasswordAuthenticationToken(username,password);
         try{
             manager.authenticate(usernamePasswordAuthenticationToken);
-        }catch (Exception e){
-            throw new Exception("bad credentials");
+        }catch (BadCredentialsException e){
+            throw new BadCredentialsException("bad credentials");
         }
-
     }
 }

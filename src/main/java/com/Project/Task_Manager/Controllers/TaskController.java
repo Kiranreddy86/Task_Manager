@@ -26,7 +26,7 @@ public class TaskController {
         this.taskService = taskService;
     }
     @PostMapping("/add")
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<TaskEntity> addTask(@RequestBody TaskEntity taskEntity,@RequestParam("user") int userId) {
         return taskService.addTask(taskEntity,userId);
     }
