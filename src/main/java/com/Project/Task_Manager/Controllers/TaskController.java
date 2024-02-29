@@ -47,9 +47,14 @@ public class TaskController {
     public List<TaskEntity> getAllTasks(){
         return taskService.getAllTasks();
     }
-    @GetMapping("/todayTasks")
-    public List<TaskEntity> getAllTodayTasks(){
+    @GetMapping("/today/all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<TaskEntity>> getAllTodayTasks(){
         return taskService.getAllTodayTasks();
+    }
+    @PutMapping("/finished/{task_id}")
+    public ResponseEntity<TaskEntity> taskFinished(@PathVariable int taskId){
+        return taskService.taskFinished(taskId);
     }
 
 }

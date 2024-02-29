@@ -1,6 +1,7 @@
 package com.Project.Task_Manager.Service;
 
 import com.Project.Task_Manager.Repository.NoteRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.Project.Task_Manager.Repository.TaskRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -54,10 +56,20 @@ public class TaskService {
         }
         return taskRepository.findAll();
     }
-    public List<TaskEntity> getAllTodayTasks(){
+    public ResponseEntity<List<TaskEntity>> getAllTodayTasks(){
         LocalDate currentDate = LocalDate.now();
         List<TaskEntity> tasks = taskRepository.findTasksByCurrentDate(currentDate);
-        return tasks;
+        return ResponseEntity.ok(tasks);
     }
 
+    public ResponseEntity<TaskEntity> taskFinished(int taskId) {
+        Optional<TaskEntity> optionalTask = taskRepository.findById(taskId);
+        if (optionalTask.isPresent()) {
+            TaskEntity task = optionalTask.get();
+            task.setCompleted(true);
+            return ResponseEntity.ok(taskRepository.save(task));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
