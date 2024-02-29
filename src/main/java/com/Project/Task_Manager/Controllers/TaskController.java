@@ -2,6 +2,7 @@ package com.Project.Task_Manager.Controllers;
 
 
 import DTO.TaskRequest;
+import com.Project.Task_Manager.Entity.NoteEntity;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,13 +28,8 @@ public class TaskController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<TaskEntity> addTask(@RequestBody TaskRequest taskRequest) {
-        TaskEntity entity=new TaskEntity();
-        entity.setTitle(taskRequest.getTitle());
-        entity.setDescription(taskRequest.getDescription());
-        entity.setDeadline(taskRequest.getDeadline());
-        entity.setNoteEntity(taskRequest.getNotes());
-        return taskService.addTask(entity);
+    public ResponseEntity<TaskEntity> addTask(@RequestBody TaskEntity taskEntity) {
+        return taskService.addTask(taskEntity);
     }
     @GetMapping("/{task_id}")
     @PreAuthorize("hasRole('ADMIN')")
