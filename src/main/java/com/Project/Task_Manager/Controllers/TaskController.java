@@ -25,36 +25,34 @@ public class TaskController {
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
-    @CrossOrigin
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TaskEntity> addTask(@RequestBody TaskEntity taskEntity,@RequestParam int userId) {
         return taskService.addTask(taskEntity,userId);
     }
-    @GetMapping("/{task_id}")
+    @GetMapping("/userId/{task_id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<TaskEntity> getById(@PathVariable int task_id){
-        return taskService.getTaskById(task_id);
+    public ResponseEntity<TaskEntity> getById(@RequestParam("userId")int userId,@PathVariable int task_id){
+        return taskService.getTaskById(userId,task_id);
     }
-    @DeleteMapping("/{task_id}")
+    @DeleteMapping("/userId/{task_id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<TaskEntity> deleteById(@PathVariable int task_id){
-        return taskService.deleteById(task_id);
+    public ResponseEntity<TaskEntity> deleteById(@RequestParam("userId")int userId,@PathVariable int task_id){
+        return taskService.deleteById(userId,task_id);
     }
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ADMIN')")
-    public List<TaskEntity> getAllTasks(){
-        return taskService.getAllTasks();
+    public List<TaskEntity> getAllTasks(@RequestParam("userId") int userId){
+        return taskService.getAllTasks(userId);
     }
-    @GetMapping("/today/all")
+    @GetMapping("/userId/today/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<TaskEntity>> getAllTodayTasks(){
-        return taskService.getAllTodayTasks();
+    public ResponseEntity<List<TaskEntity>> getAllTodayTasks(@RequestParam int userId){
+        return taskService.getAllTodayTasks(userId);
     }
-    @PutMapping("/finished/{task_id}")
-    public ResponseEntity<TaskEntity> taskFinished(@PathVariable int taskId){
-        return taskService.taskFinished(taskId);
+    @PutMapping("/userId/finished/{task_id}")
+    public ResponseEntity<TaskEntity> taskFinished(@RequestParam int userId,@PathVariable int taskId){
+        return taskService.taskFinished(userId,taskId);
     }
-
 }

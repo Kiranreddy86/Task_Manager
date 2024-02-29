@@ -1,8 +1,6 @@
 package com.Project.Task_Manager.Repository;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -14,6 +12,11 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<TaskEntity,Integer> {
-    @Query(value = "SELECT * FROM tasks WHERE deadline = :currentDate", nativeQuery = true)
-    List<TaskEntity> findTasksByCurrentDate(@Param("currentDate") LocalDate currentDate);
+    @Query(value = "SELECT * FROM tasks WHERE user_id= :userId and deadline = :currentDate", nativeQuery = true)
+    List<TaskEntity> findTasksByCurrentDate(@Param("userId") int userId, @Param("currentDate") LocalDate currentDate);
+    @Query(value = "SELECT * FROM tasks WHERE user_id = :userId", nativeQuery = true)
+    List<TaskEntity> findAllById(@Param("userId") int userId);
+
+    @Query(value = "SELECT * FROM tasks WHERE user_id = :userId and task_id= :taskId", nativeQuery = true)
+    TaskEntity getTaskById(@Param("userId") int userId,@Param("taskId") int task_id);
 }
