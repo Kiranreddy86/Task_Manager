@@ -25,11 +25,11 @@ public class TaskController {
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
-
+    @CrossOrigin
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<TaskEntity> addTask(@RequestBody TaskEntity taskEntity) {
-        return taskService.addTask(taskEntity);
+    public ResponseEntity<TaskEntity> addTask(@RequestBody TaskEntity taskEntity,@RequestParam int userId) {
+        return taskService.addTask(taskEntity,userId);
     }
     @GetMapping("/{task_id}")
     @PreAuthorize("hasRole('ADMIN')")

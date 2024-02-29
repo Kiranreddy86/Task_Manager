@@ -20,4 +20,8 @@ public class UserService {
         userEntity.setPassword(bCrypt);
         userRepository.save(userEntity);
     }
+
+    public UserEntity getUserById(int userId) {
+        return userRepository.findById(userId).get();
+    }
 }

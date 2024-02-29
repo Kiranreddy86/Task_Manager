@@ -1,5 +1,6 @@
 package com.Project.Task_Manager.Service;
 
+import com.Project.Task_Manager.Entity.UserEntity;
 import com.Project.Task_Manager.Repository.NoteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,18 @@ import java.util.Optional;
 
 @Service
 public class TaskService {
+    @Autowired
+    UserService userService;
     private final TaskRepository taskRepository;
     @Autowired
     public TaskService(TaskRepository taskRepository, NoteRepository noteRepository) {
         this.taskRepository = taskRepository;
     }
-    public ResponseEntity<TaskEntity> addTask(TaskEntity taskEntity) {
+    public ResponseEntity<TaskEntity> addTask(TaskEntity taskEntity,int userId) {
         LocalDate deadlineDate=taskEntity.getDeadline();
         LocalDate createdDate =taskEntity.getCreated_At();
+        UserEntity user = userService.getUserById(userId);
+        taskEntity.setUser(user);
         boolean before = deadlineDate.isBefore(createdDate);
         if(!before){
             return ResponseEntity.ok(taskRepository.save(taskEntity));
@@ -66,7 +71,7 @@ public class TaskService {
         Optional<TaskEntity> optionalTask = taskRepository.findById(taskId);
         if (optionalTask.isPresent()) {
             TaskEntity task = optionalTask.get();
-            task.setCompleted(true);
+            task.setCompleted(!task.isCompleted());
             return ResponseEntity.ok(taskRepository.save(task));
         } else {
             return ResponseEntity.notFound().build();
