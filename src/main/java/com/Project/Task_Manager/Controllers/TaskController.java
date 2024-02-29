@@ -30,12 +30,12 @@ public class TaskController {
     public ResponseEntity<TaskEntity> addTask(@RequestBody TaskEntity taskEntity,@RequestParam int userId) {
         return taskService.addTask(taskEntity,userId);
     }
-    @GetMapping("/userId/{task_id}")
+    @GetMapping("/{task_id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TaskEntity> getById(@RequestParam("userId")int userId,@PathVariable int task_id){
         return taskService.getTaskById(userId,task_id);
     }
-    @DeleteMapping("/userId/{task_id}")
+    @DeleteMapping("/{task_id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TaskEntity> deleteById(@RequestParam("userId")int userId,@PathVariable int task_id){
         return taskService.deleteById(userId,task_id);
@@ -51,7 +51,7 @@ public class TaskController {
     public ResponseEntity<List<TaskEntity>> getAllTodayTasks(@RequestParam int userId){
         return taskService.getAllTodayTasks(userId);
     }
-    @PutMapping("/userId/finished/{task_id}")
+    @PutMapping("/finished/{task_id}")
     public ResponseEntity<TaskEntity> taskFinished(@RequestParam int userId,@PathVariable int taskId){
         return taskService.taskFinished(userId,taskId);
     }
