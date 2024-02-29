@@ -27,32 +27,32 @@ public class TaskController {
     }
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<TaskEntity> addTask(@RequestBody TaskEntity taskEntity,@RequestParam int userId) {
+    public ResponseEntity<TaskEntity> addTask(@RequestBody TaskEntity taskEntity,@RequestParam("user") int userId) {
         return taskService.addTask(taskEntity,userId);
     }
     @GetMapping("/{task_id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<TaskEntity> getById(@RequestParam("userId")int userId,@PathVariable int task_id){
+    public ResponseEntity<TaskEntity> getById(@RequestParam("user")int userId,@PathVariable int task_id){
         return taskService.getTaskById(userId,task_id);
     }
     @DeleteMapping("/{task_id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<TaskEntity> deleteById(@RequestParam("userId")int userId,@PathVariable int task_id){
+    public ResponseEntity<TaskEntity> deleteById(@RequestParam("user")int userId,@PathVariable int task_id){
         return taskService.deleteById(userId,task_id);
     }
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ADMIN')")
-    public List<TaskEntity> getAllTasks(@RequestParam("userId") int userId){
+    public List<TaskEntity> getAllTasks(@RequestParam("user") int userId){
         return taskService.getAllTasks(userId);
     }
     @GetMapping("/userId/today/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<TaskEntity>> getAllTodayTasks(@RequestParam int userId){
+    public ResponseEntity<List<TaskEntity>> getAllTodayTasks(@RequestParam("user") int userId){
         return taskService.getAllTodayTasks(userId);
     }
     @PutMapping("/finished/{task_id}")
-    public ResponseEntity<TaskEntity> taskFinished(@RequestParam int userId,@PathVariable int taskId){
+    public ResponseEntity<TaskEntity> taskFinished(@RequestParam("user") int userId,@PathVariable int taskId){
         return taskService.taskFinished(userId,taskId);
     }
 }
