@@ -32,12 +32,12 @@ public class TaskController {
     }
     @GetMapping("/{task_id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<TaskEntity> getById(@RequestParam("user")int userId,@PathVariable int task_id){
+    public ResponseEntity<TaskEntity> getById(@RequestParam("user") int userId,@PathVariable int task_id){
         return taskService.getTaskById(userId,task_id);
     }
     @DeleteMapping("/{task_id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<TaskEntity> deleteById(@RequestParam("user")int userId,@PathVariable int task_id){
+    public ResponseEntity<TaskEntity> deleteById(@RequestParam("user") int userId,@PathVariable int task_id){
         return taskService.deleteById(userId,task_id);
     }
     @GetMapping("/all")

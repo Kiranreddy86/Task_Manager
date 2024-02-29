@@ -1,6 +1,7 @@
 package com.Project.Task_Manager.Service;
 
 import com.Project.Task_Manager.Entity.UserEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,6 @@ import com.Project.Task_Manager.Repository.TaskRepository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class TaskService {
     @Autowired
@@ -21,7 +21,6 @@ public class TaskService {
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
-    //done
     public ResponseEntity<TaskEntity> addTask(TaskEntity taskEntity,int userId) {
         LocalDate deadlineDate=taskEntity.getDeadline();
         LocalDate createdDate =taskEntity.getCreated_At();
@@ -34,7 +33,6 @@ public class TaskService {
             return ResponseEntity.unprocessableEntity().build();
         }
     }
-    //done
     public ResponseEntity<TaskEntity> getTaskById(int userId, int task_id) {
         TaskEntity list = taskRepository.getTaskById(userId,task_id);
         if(list == null) {
@@ -42,7 +40,6 @@ public class TaskService {
         }
         return ResponseEntity.ok(list);
     }
-    //done
     public ResponseEntity<TaskEntity> deleteById(int userId,int taskId) {
         TaskEntity task=taskRepository.getTaskById(userId,taskId);
         if(task == null) {
@@ -51,7 +48,6 @@ public class TaskService {
         taskRepository.delete(task);
         return ResponseEntity.ok(task);
     }
-    //done
     public List<TaskEntity> getAllTasks(int userId) {
         List<TaskEntity> list = taskRepository.findAllById(userId);
         for (TaskEntity entity: list){
@@ -62,14 +58,12 @@ public class TaskService {
         }
         return taskRepository.findAllById(userId);
     }
-    //done
     public ResponseEntity<List<TaskEntity>> getAllTodayTasks(int userId){
         LocalDate currentDate = LocalDate.now();
         List<TaskEntity> tasks = taskRepository.findTasksByCurrentDate(userId,currentDate);
         return ResponseEntity.ok(tasks);
     }
-
-    //done
+    @Transactional
     public ResponseEntity<TaskEntity> taskFinished(int userId, int taskId) {
         TaskEntity task=taskRepository.getTaskById(userId,taskId);
         if (task!=null) {
