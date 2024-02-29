@@ -1,10 +1,10 @@
-API ENDPOINTS
+## API ENDPOINTS
 
-Create a new task
+# Create a new task
 <br>
-*** POST/tasks
+> POST/tasks
 <br>
-Get all tasks if completed=true
+## Get all tasks if completed=true
 <br>
 *** GET/tasks
 <br>
