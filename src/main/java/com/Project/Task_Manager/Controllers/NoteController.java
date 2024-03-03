@@ -19,18 +19,21 @@ public class NoteController {
     @GetMapping("/{task_id}/notes")
     @ResponseStatus(HttpStatus.FOUND)
     @PreAuthorize("hasRole('ADMIN')")
-    public List<NoteEntity> getNotesTaskId(@PathVariable int task_id){
-        return noteService.getNotesTaskId(task_id);
+    public List<NoteEntity> getNotesTaskId(@RequestParam("user") int userId,@PathVariable int task_id){
+        return noteService.getNotesTaskId(userId,task_id);
     }
     @PostMapping("/{task_id}/notes")
-    public ResponseEntity<NoteEntity> addNoteTaskId(@PathVariable int task_id, @RequestBody NoteRequest noteRequest) throws NoSuchFieldException {
+    @PreAuthorize("hasRole('NORMAL')")
+    public ResponseEntity<NoteEntity> addNoteTaskId(@RequestParam("user") int userId,@PathVariable int task_id, @RequestBody NoteRequest noteRequest) throws NoSuchFieldException {
         return noteService.addNoteTaskId(task_id, noteRequest);
     }
     @DeleteMapping("/{task_id}/notes/{note_id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<NoteEntity> deleteNoteById(@PathVariable int task_id,@PathVariable int note_id) throws NoSuchFieldException {
         return noteService.deleteNoteById(task_id,note_id);
     }
     @GetMapping("/all")
+    @PreAuthorize("hasRole('NORMAL')")
     @ResponseStatus(HttpStatus.OK)
     public List<NoteEntity> getAllNotes(){
         return noteService.getAllNotes();

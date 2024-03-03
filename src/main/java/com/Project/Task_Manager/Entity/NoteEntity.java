@@ -1,5 +1,6 @@
 package com.Project.Task_Manager.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,4 +19,8 @@ public class NoteEntity {
     private String title;
     @Column
     private String body;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private UserEntity user;
 }

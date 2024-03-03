@@ -26,28 +26,28 @@ public class TaskController {
         this.taskService = taskService;
     }
     @PostMapping("/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_NORMAL')")
     public ResponseEntity<TaskEntity> addTask(@RequestBody TaskEntity taskEntity,@RequestParam("user") int userId) {
         return taskService.addTask(taskEntity,userId);
     }
     @GetMapping("/{task_id}")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TaskEntity> getById(@RequestParam("user") int userId,@PathVariable int task_id){
         return taskService.getTaskById(userId,task_id);
     }
     @DeleteMapping("/{task_id}")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TaskEntity> deleteById(@RequestParam("user") int userId,@PathVariable int task_id){
         return taskService.deleteById(userId,task_id);
     }
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('NORMAL')")
     public List<TaskEntity> getAllTasks(@RequestParam("user") int userId){
         return taskService.getAllTasks(userId);
     }
     @GetMapping("/userId/today/all")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('NORMAL')")
     public ResponseEntity<List<TaskEntity>> getAllTodayTasks(@RequestParam("user") int userId){
         return taskService.getAllTodayTasks(userId);
     }
