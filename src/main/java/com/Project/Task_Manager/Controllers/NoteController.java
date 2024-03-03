@@ -16,10 +16,10 @@ import java.util.List;
 public class NoteController {
     @Autowired
     NoteService noteService;
-    @GetMapping("/{task_id}/notes")
+    @GetMapping("/{user_id}/user/{task_id}/notes")
     @ResponseStatus(HttpStatus.FOUND)
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<NoteEntity> getNotesTaskId(@RequestParam("user") int userId,@PathVariable int task_id){
+//    @PreAuthorize("hasRole('ADMIN')")
+    public List<NoteEntity> getNotesTaskId(@PathVariable int userId,@PathVariable int task_id){
         return noteService.getNotesTaskId(userId,task_id);
     }
     @PostMapping("/{task_id}/notes")

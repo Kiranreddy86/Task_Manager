@@ -19,7 +19,7 @@ public class NoteEntity {
     private String title;
     @Column
     private String body;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private UserEntity user;

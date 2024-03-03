@@ -11,8 +11,8 @@ import java.util.List;
 
 @Repository
 public interface NoteRepository extends JpaRepository<NoteEntity,Integer> {
-    @Query(value = "select * from notes where task_id= :taskId",nativeQuery = true)
-    List<NoteEntity> findNoteBytaskId(@Param("taskId") int taskId);
+    @Query(value = "select * from notes where user_id = :userId and task_id = :taskId", nativeQuery = true)
+    List<NoteEntity> findNoteByTaskId(@Param("userId") int userId, @Param("taskId") int taskId);
     @Modifying
     @Query(value = "DELETE FROM notes WHERE task_id = :taskId AND id = :noteId", nativeQuery = true)
     void deleteNoteByTaskId(@Param("taskId") int taskId, @Param("noteId") int noteId);

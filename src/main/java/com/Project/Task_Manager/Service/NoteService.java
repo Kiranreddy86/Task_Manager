@@ -18,7 +18,7 @@ public class NoteService {
     @Autowired
     TaskRepository taskRepository;
     public List<NoteEntity> getNotesTaskId(int userId,int taskId) {
-        return noteRepository.findNoteBytaskId(taskId);
+        return noteRepository.findNoteByTaskId(userId,taskId);
     }
     public ResponseEntity<NoteEntity> addNoteTaskId(int taskId, NoteRequest noteRequest) {
         TaskEntity task = taskRepository.findById(taskId).orElse(null);
